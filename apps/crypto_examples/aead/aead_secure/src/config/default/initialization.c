@@ -626,12 +626,11 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+	BSP_Initialize();
+	SYSTICK_TimerInitialize();
     PM_Initialize();
 
     SERCOM4_USART_Initialize();
-
-	BSP_Initialize();
-    TCC0_TimerInitialize();
 
 
     NVIC_Initialize();

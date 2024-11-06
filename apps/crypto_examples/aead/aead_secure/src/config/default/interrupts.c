@@ -164,6 +164,7 @@ extern void SERCOM3_1_Handler          ( void ) __attribute__((weak, alias("Dumm
 extern void SERCOM3_2_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void SERCOM3_3_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void SERCOM3_4_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+extern void TCC0_DFS_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void TCC0_CNT_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void TCC0_MC0_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void TCC0_MC1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -323,7 +324,7 @@ const H3DeviceVectors exception_table=
     .pfnSERCOM3_2_Handler          = SERCOM3_2_Handler,
     .pfnSERCOM3_3_Handler          = SERCOM3_3_Handler,
     .pfnSERCOM3_4_Handler          = SERCOM3_4_Handler,
-    .pfnTCC0_DFS_Handler           = TCC0_DFS_InterruptHandler,
+    .pfnTCC0_DFS_Handler           = TCC0_DFS_Handler,
     .pfnTCC0_CNT_Handler           = TCC0_CNT_Handler,
     .pfnTCC0_MC0_Handler           = TCC0_MC0_Handler,
     .pfnTCC0_MC1_Handler           = TCC0_MC1_Handler,

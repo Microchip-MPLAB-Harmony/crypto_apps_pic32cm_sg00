@@ -81,8 +81,8 @@ void AES_GCM_SingleStep (GCM *gcm)
     
     (void) memset(gcm->symData, 0, gcm->symDataSize);
 
-    TCC0_Timer16bitCounterSet(0);
-    startTime = TCC0_Timer16bitCounterGet();
+    SYSTICK_TimerRestart();
+    startTime = SYSTICK_TimerCounterGet();
     
     status = Crypto_Aead_AesGcm_EncryptAuthDirect(
         gcm->handler,
@@ -124,8 +124,8 @@ void AES_GCM_SingleStep (GCM *gcm)
         SESSION_ID
     );
 
-    endTime = TCC0_Timer16bitCounterGet();
-    elapsedMS = (double)((endTime - startTime)/(timerFreq/1000));
+    endTime = SYSTICK_TimerCounterGet();
+    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
     printf("Time elapsed (ms): %f\r\n", elapsedMS);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
@@ -167,8 +167,8 @@ void AES_GCM_MultiStep (GCM *gcm)
     
     (void) memset(gcm->symData, 0, gcm->symDataSize);
 
-    TCC0_Timer16bitCounterSet(0);
-    startTime = TCC0_Timer16bitCounterGet();
+    SYSTICK_TimerRestart();
+    startTime = SYSTICK_TimerCounterGet();
     
     status = Crypto_Aead_AesGcm_Init(
         &gcm->AesGcm_ctx,
@@ -262,8 +262,8 @@ void AES_GCM_MultiStep (GCM *gcm)
         gcm->authTagSize
     );
 
-    endTime = TCC0_Timer16bitCounterGet();
-    elapsedMS = (double)((endTime - startTime)/(timerFreq/1000));
+    endTime = SYSTICK_TimerCounterGet();
+    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
     printf("Time elapsed (ms): %f\r\n", elapsedMS);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
@@ -305,8 +305,8 @@ void AES_CCM_MultiStep (CCM *ccm)
     
     (void) memset(ccm->symData, 0, ccm->symDataSize);
 
-    TCC0_Timer16bitCounterSet(0);
-    startTime = TCC0_Timer16bitCounterGet();
+    SYSTICK_TimerRestart();
+    startTime = SYSTICK_TimerCounterGet();
 
     status = Crypto_Aead_AesCcm_Init(
         &ccm->AesCcm_ctx,
@@ -352,8 +352,8 @@ void AES_CCM_MultiStep (CCM *ccm)
         ccm->aadSize
     );
 
-    endTime = TCC0_Timer16bitCounterGet();
-    elapsedMS = (double)((endTime - startTime)/(timerFreq/1000));
+    endTime = SYSTICK_TimerCounterGet();
+    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
     printf("Time elapsed (ms): %f\r\n", elapsedMS);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
@@ -418,8 +418,7 @@ void APP_Tasks ( void )
             testsPassed = 0;
             testsFailed = 0;
             
-            TCC0_Timer16bitPeriodSet(INT16_MAX);
-            timerFreq = (float) TCC0_TimerFrequencyGet();
+            timerFreq = (float) SYSTICK_TimerFrequencyGet();
 
             bool appInitialized = true;
 
@@ -435,7 +434,7 @@ void APP_Tasks ( void )
         {           
             if (!appData.isTestedAES_GCM && !appData.isTestedAES_CCM)
             {
-                TCC0_TimerStart(); 
+                SYSTICK_TimerStart(); 
                           
                 printf("\r\n-------AEAD AES-GCM wolfCrypt Wrapper-------\r\n");
                 AES_GCM_Test(CRYPTO_HANDLER_SW_WOLFCRYPT);
@@ -451,7 +450,7 @@ void APP_Tasks ( void )
                 printf("Tests attempted: %d", testsPassed + testsFailed);
                 printf("\r\nTests successful: %d\r\n", testsPassed);
                 
-                TCC0_TimerStop();
+                SYSTICK_TimerStop();
             }
             
             break;
