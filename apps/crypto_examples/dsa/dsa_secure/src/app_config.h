@@ -72,6 +72,29 @@ extern "C" {
     } ECDSA;
 
     // *****************************************************************************
+    /** ECDSA
+
+      @Summary
+        Data structure to time performance of cryptographic functions.
+
+      @Description
+        Implements necessary members to track the state of a timer as it roughly
+        measures the execution speed of an algorithm.
+
+      @Remarks
+        Initialize with ```void InitMeasure (void)```
+    */
+   
+    typedef struct {
+        float timerFreqHZ;
+        float timerPeriodMS;
+        
+        uint32_t startTick;
+        uint32_t endTick;
+        uint32_t rolloverCount;
+    } MEASURE;
+
+    // *****************************************************************************
     // *****************************************************************************
     // Section: Interface Functions
     // *****************************************************************************
@@ -80,7 +103,77 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void ECDSA_Test (void)
+        void Measure_Callback(uintptr_t context);
+
+      @Summary
+        Increments rollback counter.
+
+      @Description
+        Helps in tracking the number of times the timer rolls over to get an accurate
+        final measurement.
+    */
+    void Measure_Callback (uintptr_t context);
+
+    // *****************************************************************************
+    /**
+      @Function
+        void InitMeasure(void);
+
+      @Summary
+        Initializes the measurement struct.
+
+      @Description
+        Gets timer specific information like period in milliseconds and the 
+        frequency in Hz. Run before using MEASURE obj.
+    */
+    void InitMeasure (void);
+
+    // *****************************************************************************
+    /**
+      @Function
+        void InitMeasure(void);
+
+      @Summary
+        Sets the startTick member of the MEASURE obj.
+
+      @Description
+        Use right before function being measured.
+    */
+    void StartMeasurement (void);
+
+    // *****************************************************************************
+    /**
+      @Function
+        void InitMeasure(void);
+
+      @Summary
+        Sets the endTick member of the MEASURE obj.
+
+      @Description
+        Use right after function being measured.
+    */
+    void EndMeasurement (void);
+
+    // *****************************************************************************
+    /**
+      @Function
+        double CalculateElapsedTimeMS();
+
+      @Summary
+        Gets the time elapsed between StartMeasurment() and EndMeasurement()
+
+      @Description
+        Modify if using a timer other than SYSTICK. 
+
+      @Returns
+        Elapsed milliseconds as a float.
+    */
+    float CalculateElapsedTimeMS (void);
+    
+    // *****************************************************************************
+    /**
+      @Function
+        void ECDSA_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs a basic test of the ECDSA functionality.
@@ -102,7 +195,7 @@ extern "C" {
       @Remarks
         None.
     */
-void ECDSA_Test (crypto_HandlerType_E cryptoHandler);
+    void ECDSA_Test (crypto_HandlerType_E cryptoHandler);
 
     // *****************************************************************************
     /**

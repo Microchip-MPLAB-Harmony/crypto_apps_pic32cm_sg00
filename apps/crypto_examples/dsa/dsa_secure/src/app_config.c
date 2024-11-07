@@ -23,11 +23,15 @@
 
 #include "app_config.h"
 
+#define SYSTICK_MAX   0xFFFFFF
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: File Scope or Global Data                                         */
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+MEASURE measure = {0};
 
 uint8_t sig256[64];
 
@@ -134,7 +138,96 @@ uint8_t pubKeyECDSA384_Compressed[49] =
 
 /*******************************************************************************
   Function:
-    void ECDSA_Test (void)
+    void Measure_Callback(uintptr_t context)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void Measure_Callback(uintptr_t context)
+{
+    measure.rolloverCount++;
+}
+
+/*******************************************************************************
+  Function:
+    void InitMeasure (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void InitMeasure (void)
+{
+    // Use SYSTICK to implement measure obj 
+
+    measure.timerFreqHZ = (float) SYSTICK_FREQ;
+    measure.timerPeriodMS  = (float) SYSTICK_INTERRUPT_PERIOD_IN_US/1000;
+
+    SYSTICK_TimerCallbackSet(Measure_Callback, 0);
+    SYSTICK_TimerStart();
+}
+
+/*******************************************************************************
+  Function:
+    void StartMeasurement (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void StartMeasurement (void)
+{
+    measure.rolloverCount = 0;
+    measure.startTick = SYSTICK_TimerCounterGet();
+}
+
+/*******************************************************************************
+  Function:
+    void EndMeasurement (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void EndMeasurement (void)
+{
+    measure.endTick = SYSTICK_TimerCounterGet();
+}
+
+/*******************************************************************************
+  Function:
+    float CalculateElapsedTimeMS (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+float CalculateElapsedTimeMS (void)
+{
+    uint32_t tickDifference;
+
+    if (measure.startTick >= measure.endTick)
+    {
+        // Normal case: startTick is later, and endTick is closer to zero
+        tickDifference = measure.startTick - measure.endTick;
+    }
+    else
+    {
+        // Handle wraparound: startTick was taken after a rollover
+        tickDifference = (SYSTICK_MAX - measure.endTick) + measure.startTick + 1;
+    }
+
+    // Calculate elapsed time in milliseconds
+    float timeFromTicks = (float)((tickDifference)/(measure.timerFreqHZ/1000));
+    float timeFromRollovers = measure.rolloverCount * measure.timerPeriodMS;
+
+    return timeFromRollovers + timeFromTicks;
+}
+
+/*******************************************************************************
+  Function:
+    void ECDSA_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -170,68 +263,68 @@ void ECDSA_Test (crypto_HandlerType_E cryptoHandler)
     printf("\r\nECDSA P-256 Verify with Uncompressed Key\r\n");
     ECDSA_Verify_Test(&ECDSA_Verify256);  
 
-//    // wolfCrypt wrapper supports compressed key
-//    if (ECDSA_Verify256.handler == CRYPTO_HANDLER_SW_WOLFCRYPT)
-//    {
-//        ECDSA_Verify256.handler   = CRYPTO_HANDLER_SW_WOLFCRYPT;
-//        ECDSA_Verify256.curveType = CRYPTO_ECC_CURVE_SECP256R1;
-//        ECDSA_Verify256.inputHash = msg;
-//        ECDSA_Verify256.inputHashSize = sizeof(msg);
-//        ECDSA_Verify256.key = pubKeyECDSA256_Compressed;
-//        ECDSA_Verify256.keySize = sizeof(pubKeyECDSA256_Compressed);
-//        ECDSA_Verify256.sig = sig256;
-//        ECDSA_Verify256.sigSize = sizeof(sig256);
-//        ECDSA_Verify256.hashVerifyStat = 0;
-//                
-//        printf("\r\nECDSA P-256 Verify with Compressed Key\r\n");
-//        ECDSA_Verify_Test(&ECDSA_Verify256);
-//    }
-//    
-//    ECDSA ECDSA_Sign384 = {
-//        .handler     = cryptoHandler,
-//        .curveType = CRYPTO_ECC_CURVE_SECP384R1,
-//        .inputHash = msg,
-//        .inputHashSize = sizeof(msg),
-//        .key = privKeyECDSA384,
-//        .keySize = sizeof(privKeyECDSA384),
-//        .sig = sig384,
-//        .sigSize = sizeof(sig384),
-//    };
-//
-//    printf("\r\nECDSA P-384 Sign with Uncompressed Key\r\n");
-//    ECDSA_Sign_Test(&ECDSA_Sign384);
-//
-//    ECDSA ECDSA_Verify384 = {
-//        .handler     = cryptoHandler,
-//        .curveType = CRYPTO_ECC_CURVE_SECP384R1,
-//        .inputHash = msg,
-//        .inputHashSize = sizeof(msg),
-//        .key = pubKeyECDSA384,
-//        .keySize = sizeof(pubKeyECDSA384),
-//        .sig = sig384,
-//        .sigSize = sizeof(sig384),
-//        .hashVerifyStat = 0
-//    };
-//
-//    printf("\r\nECDSA P-384 Verify with Uncompressed Key\r\n");
-//    ECDSA_Verify_Test(&ECDSA_Verify384);
-//    
-//    // wolfCrypt wrapper supports compressed key
-//    if (ECDSA_Verify384.handler == CRYPTO_HANDLER_SW_WOLFCRYPT)
-//    {
-//        ECDSA_Verify384.handler   = CRYPTO_HANDLER_SW_WOLFCRYPT;
-//        ECDSA_Verify384.curveType = CRYPTO_ECC_CURVE_SECP384R1;
-//        ECDSA_Verify384.inputHash = msg;
-//        ECDSA_Verify384.inputHashSize = sizeof(msg);
-//        ECDSA_Verify384.key = pubKeyECDSA384_Compressed;
-//        ECDSA_Verify384.keySize = sizeof(pubKeyECDSA384_Compressed);
-//        ECDSA_Verify384.sig = sig384;
-//        ECDSA_Verify384.sigSize = sizeof(sig384);
-//        ECDSA_Verify384.hashVerifyStat = 0;
-//                
-//        printf("\r\nECDSA P-384 SW Verify with Compressed Key\r\n");
-//        ECDSA_Verify_Test(&ECDSA_Verify384);
-//    }
+    // wolfCrypt wrapper supports compressed key
+    if (ECDSA_Verify256.handler == CRYPTO_HANDLER_SW_WOLFCRYPT)
+    {
+        ECDSA_Verify256.handler   = CRYPTO_HANDLER_SW_WOLFCRYPT;
+        ECDSA_Verify256.curveType = CRYPTO_ECC_CURVE_SECP256R1;
+        ECDSA_Verify256.inputHash = msg;
+        ECDSA_Verify256.inputHashSize = sizeof(msg);
+        ECDSA_Verify256.key = pubKeyECDSA256_Compressed;
+        ECDSA_Verify256.keySize = sizeof(pubKeyECDSA256_Compressed);
+        ECDSA_Verify256.sig = sig256;
+        ECDSA_Verify256.sigSize = sizeof(sig256);
+        ECDSA_Verify256.hashVerifyStat = 0;
+                
+        printf("\r\nECDSA P-256 Verify with Compressed Key\r\n");
+        ECDSA_Verify_Test(&ECDSA_Verify256);
+    }
+    
+    ECDSA ECDSA_Sign384 = {
+        .handler     = cryptoHandler,
+        .curveType = CRYPTO_ECC_CURVE_SECP384R1,
+        .inputHash = msg,
+        .inputHashSize = sizeof(msg),
+        .key = privKeyECDSA384,
+        .keySize = sizeof(privKeyECDSA384),
+        .sig = sig384,
+        .sigSize = sizeof(sig384),
+    };
+
+    printf("\r\nECDSA P-384 Sign with Uncompressed Key\r\n");
+    ECDSA_Sign_Test(&ECDSA_Sign384);
+
+    ECDSA ECDSA_Verify384 = {
+        .handler     = cryptoHandler,
+        .curveType = CRYPTO_ECC_CURVE_SECP384R1,
+        .inputHash = msg,
+        .inputHashSize = sizeof(msg),
+        .key = pubKeyECDSA384,
+        .keySize = sizeof(pubKeyECDSA384),
+        .sig = sig384,
+        .sigSize = sizeof(sig384),
+        .hashVerifyStat = 0
+    };
+
+    printf("\r\nECDSA P-384 Verify with Uncompressed Key\r\n");
+    ECDSA_Verify_Test(&ECDSA_Verify384);
+    
+    // wolfCrypt wrapper supports compressed key
+    if (ECDSA_Verify384.handler == CRYPTO_HANDLER_SW_WOLFCRYPT)
+    {
+        ECDSA_Verify384.handler   = CRYPTO_HANDLER_SW_WOLFCRYPT;
+        ECDSA_Verify384.curveType = CRYPTO_ECC_CURVE_SECP384R1;
+        ECDSA_Verify384.inputHash = msg;
+        ECDSA_Verify384.inputHashSize = sizeof(msg);
+        ECDSA_Verify384.key = pubKeyECDSA384_Compressed;
+        ECDSA_Verify384.keySize = sizeof(pubKeyECDSA384_Compressed);
+        ECDSA_Verify384.sig = sig384;
+        ECDSA_Verify384.sigSize = sizeof(sig384);
+        ECDSA_Verify384.hashVerifyStat = 0;
+                
+        printf("\r\nECDSA P-384 Verify with Compressed Key\r\n");
+        ECDSA_Verify_Test(&ECDSA_Verify384);
+    }
 }
 
 /*******************************************************************************
@@ -239,7 +332,7 @@ void ECDSA_Test (crypto_HandlerType_E cryptoHandler)
     bool CompareHexArray (uint8_t *arr1, uint8_t *arr2, size_t size)
 
   Remarks:
-    See prototype in dsa_data.h.
+    See prototype in app_config.h.
  */
 
 bool CompareHexArray (uint8_t *arr1, uint8_t *arr2, size_t size)

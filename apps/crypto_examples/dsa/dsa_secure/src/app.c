@@ -36,7 +36,6 @@
 // *****************************************************************************
 
 #define SESSION_ID    1
-#define SYSTICK_MAX   0xFFFFFF
 
 // *****************************************************************************
 /* Application Data
@@ -69,68 +68,6 @@ APP_DATA appData;
     See prototype in app.h.
  */
 
-typedef struct {
-    float timerFreqHZ;
-    float timerPeriodMS;
-    
-    uint32_t startTick;
-    uint32_t endTick;
-    uint32_t rolloverCount;
-} SYSTICK_TIMER_MEASUREMENT;
-
-SYSTICK_TIMER_MEASUREMENT measurement = {0};
-
-// Callback to count rollovers
-void SysTick_Callback(uintptr_t context) {
-    measurement.rolloverCount++;
-}
-
-// Initialize SysTick timer with callback
-void InitSysTickTimer(void) {
-    //DEBUGGING
-    printf("measurement.timerFreqHZ: %f\r\n", measurement.timerFreqHZ);
-    printf("measurement.timerPeriodMS: %f\r\n", measurement.timerPeriodMS);
-    
-    SYSTICK_TimerCallbackSet(SysTick_Callback, 0);
-    SYSTICK_TimerStart();
-}
-
-void StartMeasurement() {
-    measurement.rolloverCount = 0;  // Reset rollover count
-    measurement.startTick = SYSTICK_TimerCounterGet();
-}
-
-void EndMeasurement() {
-    measurement.endTick = SYSTICK_TimerCounterGet();
-}
-
-double CalculateElapsedTime() {
-    // Calculate tick difference for a down-counting timer
-    uint32_t tickDifference;
-    
-    // DEBUGGING
-    printf("startTick: %ld, endTick: %ld\r\n", measurement.startTick, measurement.endTick);
-    printf("measurement.rolloverCount: %ld\r\n", measurement.rolloverCount);
-    
-    if (measurement.startTick >= measurement.endTick) {
-        // Normal case: startTick is later, and endTick is closer to zero
-        printf("normal\r\n");
-        tickDifference = measurement.startTick - measurement.endTick;
-    } else {
-        // Handle wraparound: startTick was taken after a rollover
-        printf("rollover\r\n");
-        tickDifference = (SYSTICK_MAX - measurement.endTick) + measurement.startTick + 1;
-                            // largest val - endTick + initial val + 1 to count zero
-                            //TODO: Figure out a good way to get the largest value 
-    }
-
-    // Calculate elapsed time in milliseconds
-    double timeFromTicks = (double)((tickDifference)/(measurement.timerFreqHZ/1000));
-    printf("timeFromTicks: %f\r\n", timeFromTicks);
-    double timeFromRollovers = measurement.rolloverCount * measurement.timerPeriodMS;
-    return timeFromRollovers + timeFromTicks;
-}
-
 void ECDSA_Sign_Test(ECDSA *ecdsa)
 {
     crypto_DigiSign_Status_E status;
@@ -153,8 +90,8 @@ void ECDSA_Sign_Test(ECDSA *ecdsa)
 
     EndMeasurement();
 
-    double elapsedTime = CalculateElapsedTime();
-    printf("Elapsed time: %f ms\n", elapsedTime);
+    float elapsedTime = CalculateElapsedTimeMS();
+    printf("Time elapsed (ms): %f\r\n", elapsedTime);
 
     if (status != CRYPTO_DIGISIGN_SUCCESS)
     {
@@ -198,8 +135,8 @@ void ECDSA_Verify_Test(ECDSA *ecdsa)
     
     EndMeasurement();
 
-    double elapsedTime = CalculateElapsedTime();
-    printf("Elapsed time: %f ms\n", elapsedTime);
+    float elapsedTime = CalculateElapsedTimeMS();
+    printf("Time elapsed (ms): %f\r\n", elapsedTime);
 
     if (status != CRYPTO_DIGISIGN_SUCCESS)
     {
@@ -262,9 +199,7 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
 
-            measurement.timerFreqHZ = (float) SYSTICK_FREQ;
-            measurement.timerPeriodMS  = (float) SYSTICK_INTERRUPT_PERIOD_IN_US/1000;
-            InitSysTickTimer();
+            InitMeasure();
 
             if (appInitialized)
             {
