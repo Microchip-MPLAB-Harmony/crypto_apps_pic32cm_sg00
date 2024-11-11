@@ -58,7 +58,6 @@ typedef enum
     /* Application's state machine's initial state. */
     APP_STATE_INIT=0,
     APP_STATE_SERVICE_TASKS,
-
 } APP_STATES;
 
 // *****************************************************************************
@@ -81,7 +80,6 @@ typedef struct
     
     uint8_t testsPassed;
     uint8_t testsFailed;
-    
 } APP_DATA;
 
 // *****************************************************************************
