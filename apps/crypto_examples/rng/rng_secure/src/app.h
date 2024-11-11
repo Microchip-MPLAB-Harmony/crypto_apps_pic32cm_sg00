@@ -161,7 +161,7 @@ void APP_Tasks (void);
 // *****************************************************************************
 /**
   @Function
-    void GenerateRng(void)
+    void GenerateRng (crypto_HandlerType_E cryptoHandler)
 
   @Summary
     Runs random number generator (RNG) test vectors.
@@ -175,7 +175,7 @@ void APP_Tasks (void);
     None.
 
   @Parameters
-    None.
+        @param cryptoHandler Specify which implementation to use. 
 
   @Returns
     None.

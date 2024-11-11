@@ -53,19 +53,15 @@ extern "C" {
         This structure is used in various hash computation functions.
     */
     typedef struct {
-        st_Crypto_Hash_Sha_Ctx  Hash_Sha_Ctx;
-        st_Crypto_Hash_Md5_Ctx  Hash_Md5_Ctx;
-
+        st_Crypto_Hash_Sha_Ctx Hash_Sha_Ctx;
+        st_Crypto_Hash_Md5_Ctx Hash_Md5_Ctx;
         crypto_HandlerType_E handler;
         crypto_Hash_Algo_E hashMode;
-
-        uint8_t *msg;
+        uint8_t* msg;
         size_t msgSize;
-
-        uint8_t *msgDigest;
+        uint8_t* msgDigest;
         size_t msgDigestSize;
-
-        uint8_t *expectedMsg;
+        uint8_t* expectedMsg;
         size_t expectedMsgSize;
     } HASH;
 
@@ -97,7 +93,7 @@ extern "C" {
     // Section: Interface Functions
     // *****************************************************************************
     // *****************************************************************************
-    
+
     // *****************************************************************************
     /**
       @Function
@@ -231,7 +227,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void MD5_Test (void)
+        void MD5_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs MD5 test vectors.
@@ -245,7 +241,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -259,7 +255,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void SHA1_Test (void)
+        void SHA1_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs SHA1 test vectors.
@@ -273,7 +269,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -287,7 +283,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void SHA2_Test (void)
+        void SHA2_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs SHA2 test vectors.
@@ -301,7 +297,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.

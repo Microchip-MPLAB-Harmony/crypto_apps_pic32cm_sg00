@@ -191,7 +191,7 @@ float CalculateElapsedTimeMS (void)
 
 /*******************************************************************************
   Function:
-    void AES_GCM_Test (void)
+    void AES_GCM_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.
@@ -230,7 +230,7 @@ void AES_GCM_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void AES_CCM_Test (void)
+    void AES_CCM_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.

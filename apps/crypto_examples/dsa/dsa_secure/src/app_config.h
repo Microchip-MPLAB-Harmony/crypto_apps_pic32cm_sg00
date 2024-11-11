@@ -58,16 +58,12 @@ extern "C" {
     {
         crypto_HandlerType_E handler;
         crypto_EccCurveType_E curveType;
-
-        uint8_t *inputHash;
+        uint8_t* inputHash;
         size_t inputHashSize;
-
-        uint8_t *key;
+        uint8_t* key;
         size_t keySize;
-
-        uint8_t *sig;
+        uint8_t* sig;
         size_t sigSize;
-        
         int8_t hashVerifyStat;
     } ECDSA;
 
@@ -187,7 +183,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.

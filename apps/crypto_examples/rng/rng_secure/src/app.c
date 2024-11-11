@@ -65,7 +65,7 @@ APP_DATA appData;
 
 /*******************************************************************************
   Function:
-    void GenerateRng (void)
+    void GenerateRng (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app.h.

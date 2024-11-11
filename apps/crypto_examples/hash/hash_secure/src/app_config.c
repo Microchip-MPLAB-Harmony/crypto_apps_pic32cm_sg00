@@ -223,7 +223,7 @@ float CalculateElapsedTimeMS (void)
 
 /*******************************************************************************
   Function:
-    void MD5_Test (void)
+    void MD5_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -254,7 +254,7 @@ void MD5_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void SHA1_Test (void)
+    void SHA1_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -285,7 +285,7 @@ void SHA1_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void SHA2_Test (void)
+    void SHA2_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.

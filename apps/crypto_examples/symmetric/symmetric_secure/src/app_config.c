@@ -446,7 +446,7 @@ float CalculateElapsedTimeMS (void)
 
 /*******************************************************************************
   Function:
-    void AES_ECB_Test (void)
+    void AES_ECB_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -540,7 +540,7 @@ void AES_ECB_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void AES_CBC_Test (void)
+    void AES_CBC_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -634,7 +634,7 @@ void AES_CBC_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void AES_CTR_Test (void)
+    void AES_CTR_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -728,7 +728,7 @@ void AES_CTR_Test (crypto_HandlerType_E cryptoHandler)
 
 /*******************************************************************************
   Function:
-    void AES_KeyWrap_Test (void)
+    void AES_KeyWrap_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.

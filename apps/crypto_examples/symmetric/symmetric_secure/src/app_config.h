@@ -77,25 +77,18 @@ extern "C" {
     */
 
     typedef struct {
-//        st_Crypto_Sym_StreamCtx Sym_Stream_Ctx;
-        st_Crypto_Sym_BlockCtx  Sym_Block_Ctx;
-
+        st_Crypto_Sym_BlockCtx Sym_Block_Ctx;
         crypto_HandlerType_E handler;
         crypto_Sym_OpModes_E aesMode;
-
-        uint8_t *iv;
-
-        uint8_t *key;
+        uint8_t* iv;
+        uint8_t* key;
         size_t keySize;
-
-        uint8_t *pt;
+        uint8_t* pt;
         size_t ptSize;
-
-        uint8_t *symData;
+        uint8_t* symData;
         size_t symDataSize;
-
-        uint8_t *cipher;
-        size_t cipherSize;    
+        uint8_t* cipher;
+        size_t cipherSize;
     } AES;
 
     // *****************************************************************************
@@ -318,7 +311,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_ECB_Test (void)
+        void AES_ECB_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs ECB test vectors.
@@ -332,7 +325,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -346,7 +339,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_CBC_Test (void)
+        void AES_CBC_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs CBC test vectors.
@@ -360,7 +353,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -374,7 +367,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_CTR_Test (void)
+        void AES_CTR_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs CTR test vectors.
@@ -388,7 +381,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -402,7 +395,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_KeyWrap_Test (void)
+        void AES_KeyWrap_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs Key Wrap test vectors.
@@ -416,7 +409,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.

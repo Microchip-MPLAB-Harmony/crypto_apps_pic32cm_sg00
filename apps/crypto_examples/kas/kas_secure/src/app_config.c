@@ -223,7 +223,7 @@ float CalculateElapsedTimeMS (void)
 
 /*******************************************************************************
   Function:
-    void SECP256R1_Test (void)
+    void SECP256R1_Test (crypto_HandlerType_E cryptoHandler)
 
   Remarks:
     See prototype in app_config.h.
@@ -265,6 +265,14 @@ void SECP256R1_Test (crypto_HandlerType_E cryptoHandler)
     GenerateSharedSecret(&secp256r1);
  }
 }
+
+/*******************************************************************************
+  Function:
+    void SECP384R1_Test (crypto_HandlerType_E cryptoHandler)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
 
 void SECP384R1_Test(crypto_HandlerType_E cryptoHandler)
 {

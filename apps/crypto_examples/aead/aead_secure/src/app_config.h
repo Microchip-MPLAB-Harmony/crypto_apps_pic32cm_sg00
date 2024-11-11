@@ -57,32 +57,23 @@ extern "C" {
     
     typedef struct
     {
-        st_Crypto_Aead_AesGcm_ctx   AesGcm_ctx;
-
+        st_Crypto_Aead_AesGcm_ctx AesGcm_ctx;
         crypto_HandlerType_E handler;
-        
-        uint8_t *pt;
+        uint8_t* pt;
         size_t ptSize;
-
-        uint8_t *cipher;
+        uint8_t* cipher;
         size_t cipherSize;
-
-        uint8_t *symData;
+        uint8_t* symData;
         size_t symDataSize;
-        
-        uint8_t *key;
+        uint8_t* key;
         size_t keySize;
-
-        uint8_t *iv;
+        uint8_t* iv;
         size_t ivSize;
-
-        uint8_t *aad;
+        uint8_t* aad;
         size_t aadSize;
-
-        uint8_t *authTag;
+        uint8_t* authTag;
         size_t authTagSize;
     } GCM;
-
 
     // *****************************************************************************
     /** CCM
@@ -103,28 +94,20 @@ extern "C" {
     typedef struct
     {
         st_Crypto_Aead_AesCcm_ctx AesCcm_ctx;
-
         crypto_HandlerType_E handler;
-        
-        uint8_t *pt;
+        uint8_t* pt;
         size_t ptSize;
-
-        uint8_t *cipher;
+        uint8_t* cipher;
         size_t cipherSize;
-
-        uint8_t *symData;
+        uint8_t* symData;
         size_t symDataSize;
-
-        uint8_t *key;
+        uint8_t* key;
         size_t keySize;
-
-        uint8_t *iv;
+        uint8_t* iv;
         size_t ivSize;
-
-        uint8_t *aad;
+        uint8_t* aad;
         size_t aadSize;
-
-        uint8_t *authTag;
+        uint8_t* authTag;
         size_t authTagSize;
     } CCM;
 
@@ -323,7 +306,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_GCM_Test (void)
+        void AES_GCM_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs GCM test vectors.
@@ -337,7 +320,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -351,7 +334,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void AES_CCM_Test (void)
+        void AES_CCM_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs CCM test vectors.
@@ -365,7 +348,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.

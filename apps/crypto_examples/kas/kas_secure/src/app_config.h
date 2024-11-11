@@ -56,17 +56,13 @@ extern "C" {
     typedef struct {
         crypto_HandlerType_E handler;
         crypto_EccCurveType_E curveType;
-
-        uint8_t *privKey;
+        uint8_t* privKey;
         size_t privKeySize;
-
-        uint8_t *publKey;
-        size_t publKeySize;
-        
-        uint8_t *sharedSecret;
+        uint8_t* publKey;
+        size_t publKeySize;     
+        uint8_t* sharedSecret;
         size_t sharedSecretSize;
-
-        uint8_t *expectedSecret;
+        uint8_t* expectedSecret;
         size_t expectedSecretSize;
     } ECDH;
 
@@ -201,7 +197,7 @@ extern "C" {
     // *****************************************************************************
     /**
       @Function
-        void SECP384R1_Test(crypto_HandlerType_E cryptoHandler)
+        void SECP384R1_Test (crypto_HandlerType_E cryptoHandler)
 
       @Summary
         Runs SECP384R1 test vectors.
@@ -215,7 +211,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
@@ -242,7 +238,7 @@ extern "C" {
         None.
 
       @Parameters
-        None.
+        @param cryptoHandler Specify which implementation to use. 
 
       @Returns
         None.
