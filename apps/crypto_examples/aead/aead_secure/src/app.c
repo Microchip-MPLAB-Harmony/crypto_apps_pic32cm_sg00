@@ -37,11 +37,6 @@
 
 #define SESSION_ID    1
 
-uint8_t testsPassed;
-uint8_t testsFailed;
-
-float timerFreq;
-
 // *****************************************************************************
 /* Application Data
 
@@ -75,14 +70,10 @@ APP_DATA appData;
 
 void AES_GCM_SingleStep (GCM *gcm)
 {
-    uint32_t startTime = 0, endTime = 0;
-    double elapsedMS;
     crypto_Aead_Status_E status;
-    
     (void) memset(gcm->symData, 0, gcm->symDataSize);
 
-    SYSTICK_TimerRestart();
-    startTime = SYSTICK_TimerCounterGet();
+    StartMeasurement();
     
     status = Crypto_Aead_AesGcm_EncryptAuthDirect(
         gcm->handler,
@@ -124,14 +115,15 @@ void AES_GCM_SingleStep (GCM *gcm)
         SESSION_ID
     );
 
-    endTime = SYSTICK_TimerCounterGet();
-    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
-    printf("Time elapsed (ms): %f\r\n", elapsedMS);
+    EndMeasurement();
+
+    float elapsedTime = CalculateElapsedTimeMS();
+    printf("Time elapsed (ms): %f\r\n", elapsedTime);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
     {
         printf("Failed to decipher text, status: %d\r\n", status);
-        testsFailed++;
+        appData.testsFailed++;
     }
     else
     {
@@ -139,12 +131,12 @@ void AES_GCM_SingleStep (GCM *gcm)
 
         if (outputMatch)
         {
-            testsPassed++;
+            appData.testsPassed++;
             printf("Test successful\r\n");
         }
         else
         {
-            testsFailed++;
+            appData.testsFailed++;
             printf("Test unsuccessful\r\n");
         }
     }
@@ -161,14 +153,10 @@ void AES_GCM_SingleStep (GCM *gcm)
 
 void AES_GCM_MultiStep (GCM *gcm)
 {
-    uint32_t startTime = 0, endTime = 0;
-    double elapsedMS;
     crypto_Aead_Status_E status;
-    
     (void) memset(gcm->symData, 0, gcm->symDataSize);
 
-    SYSTICK_TimerRestart();
-    startTime = SYSTICK_TimerCounterGet();
+    StartMeasurement();
     
     status = Crypto_Aead_AesGcm_Init(
         &gcm->AesGcm_ctx,
@@ -262,14 +250,15 @@ void AES_GCM_MultiStep (GCM *gcm)
         gcm->authTagSize
     );
 
-    endTime = SYSTICK_TimerCounterGet();
-    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
-    printf("Time elapsed (ms): %f\r\n", elapsedMS);
+    EndMeasurement();
+
+    float elapsedTime = CalculateElapsedTimeMS();
+    printf("Time elapsed (ms): %f\r\n", elapsedTime);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
     {
         printf("Failed to decipher text, status: %d\r\n", status);
-        testsFailed++;
+        appData.testsFailed++;
     }
     else
     {
@@ -277,12 +266,12 @@ void AES_GCM_MultiStep (GCM *gcm)
 
         if (outputMatch)
         {
-            testsPassed++;
+            appData.testsPassed++;
             printf("Test successful\r\n");
         }
         else
         {
-            testsFailed++;
+            appData.testsFailed++;
             printf("Test unsuccessful\r\n");
         }
     }
@@ -299,14 +288,10 @@ void AES_GCM_MultiStep (GCM *gcm)
 
 void AES_CCM_MultiStep (CCM *ccm)
 {    
-    uint32_t startTime = 0, endTime = 0;
-    double elapsedMS;
     crypto_Aead_Status_E status;
-    
     (void) memset(ccm->symData, 0, ccm->symDataSize);
 
-    SYSTICK_TimerRestart();
-    startTime = SYSTICK_TimerCounterGet();
+    StartMeasurement();
 
     status = Crypto_Aead_AesCcm_Init(
         &ccm->AesCcm_ctx,
@@ -352,14 +337,15 @@ void AES_CCM_MultiStep (CCM *ccm)
         ccm->aadSize
     );
 
-    endTime = SYSTICK_TimerCounterGet();
-    elapsedMS = (double)((startTime - endTime)/(timerFreq/1000));
-    printf("Time elapsed (ms): %f\r\n", elapsedMS);
+    EndMeasurement();
+
+    float elapsedTime = CalculateElapsedTimeMS();
+    printf("Time elapsed (ms): %f\r\n", elapsedTime);
 
     if (status != CRYPTO_AEAD_CIPHER_SUCCESS)
     {
         printf("Failed to decipher text, status: %d\r\n", status);
-        testsFailed++;
+        appData.testsFailed++;
     }
     else
     {
@@ -367,12 +353,12 @@ void AES_CCM_MultiStep (CCM *ccm)
 
         if (outputMatch)
         {
-            testsPassed++;
+            appData.testsPassed++;
             printf("Test successful\r\n");
         }
         else
         {
-            testsFailed++;
+            appData.testsFailed++;
             printf("Test unsuccessful\r\n");
         }
     }
@@ -397,6 +383,9 @@ void APP_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
     appData.isTestedAES_GCM = false;
+    
+    appData.testsFailed = 0;
+    appData.testsPassed = 0;    
 }
 
 /******************************************************************************
@@ -415,11 +404,8 @@ void APP_Tasks ( void )
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
-            testsPassed = 0;
-            testsFailed = 0;
+            InitMeasure();
             
-            timerFreq = (float) SYSTICK_TimerFrequencyGet();
-
             bool appInitialized = true;
 
             if (appInitialized)
@@ -431,11 +417,9 @@ void APP_Tasks ( void )
         }
 
         case APP_STATE_SERVICE_TASKS:
-        {           
+        {
             if (!appData.isTestedAES_GCM && !appData.isTestedAES_CCM)
-            {
-                SYSTICK_TimerStart(); 
-                          
+            {                         
                 printf("\r\n-------AEAD AES-GCM wolfCrypt Wrapper-------\r\n");
                 AES_GCM_Test(CRYPTO_HANDLER_SW_WOLFCRYPT);
 
@@ -447,10 +431,8 @@ void APP_Tasks ( void )
                 appData.isTestedAES_CCM = true;
 
                 printf("\r\n-----------------------------------\r\n");
-                printf("Tests attempted: %d", testsPassed + testsFailed);
-                printf("\r\nTests successful: %d\r\n", testsPassed);
-                
-                SYSTICK_TimerStop();
+                printf("Tests attempted: %d", appData.testsPassed + appData.testsFailed);
+                printf("\r\nTests successful: %d\r\n", appData.testsPassed);
             }
             
             break;

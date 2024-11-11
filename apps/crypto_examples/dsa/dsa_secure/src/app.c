@@ -197,9 +197,9 @@ void APP_Tasks ( void )
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
-            bool appInitialized = true;
-
             InitMeasure();
+            
+            bool appInitialized = true;
 
             if (appInitialized)
             {

@@ -84,6 +84,9 @@ typedef struct
     APP_STATES state;
     volatile bool isTestedAES_GCM;
     volatile bool isTestedAES_CCM;
+    
+    uint8_t testsPassed;
+    uint8_t testsFailed;    
 } APP_DATA;
 
 // *****************************************************************************

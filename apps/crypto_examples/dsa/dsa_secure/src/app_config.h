@@ -72,7 +72,7 @@ extern "C" {
     } ECDSA;
 
     // *****************************************************************************
-    /** ECDSA
+    /** MEASURE
 
       @Summary
         Data structure to time performance of cryptographic functions.

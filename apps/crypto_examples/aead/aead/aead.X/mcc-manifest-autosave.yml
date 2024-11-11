@@ -2,7 +2,7 @@
 
 manifest_file_version: 1.0.0
 project: aead_secure
-creation_date: 2024-11-06T12:21:20.329-07:00[America/Phoenix]
+creation_date: 2024-11-07T10:51:23.066-07:00[America/Phoenix]
 operating_system: Windows 10
 mcc_mode: IDE
 mcc_mode_version: v6.20
@@ -19,7 +19,6 @@ device_library: {library_class: com.microchip.mcc.harmony.Harmony3Library, name:
 packs: {name: PIC32CM-SG00_DFP, version: 1.0.26}
 modules:
 - {name: csp, type: HARMONY, version: Branch_v3.20.0-E1}
-- {name: core, type: HARMONY, version: Branch_v3.14.0-E1}
 - {name: CMSIS_5, type: HARMONY, version: 5.8.0}
 - {name: crypto_v4, type: HARMONY, version: MH3-105104-fix-wolfcrypt-rng-memory-leak}
 - {name: wolfssl, type: HARMONY, version: v5.7.0-stable}

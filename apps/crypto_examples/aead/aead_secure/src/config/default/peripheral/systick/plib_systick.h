@@ -57,7 +57,21 @@
 
 #define SYSTICK_FREQ   72000000U
 
+#define SYSTICK_INTERRUPT_PERIOD_IN_US  (32000U)
 
+typedef void (*SYSTICK_CALLBACK)(uintptr_t context);
+
+typedef struct
+{ 
+    uint32_t start; 
+    uint32_t count; 
+}SYSTICK_TIMEOUT;
+typedef struct
+{
+   SYSTICK_CALLBACK          callback;
+   uintptr_t                 context;
+   volatile uint32_t         tickCounter;
+} SYSTICK_OBJECT ;
 /***************************** SYSTICK API *******************************/
 void SYSTICK_TimerInitialize ( void );
 void SYSTICK_TimerRestart ( void );
@@ -71,6 +85,11 @@ void SYSTICK_DelayMs ( uint32_t delay_ms );
 void SYSTICK_DelayUs ( uint32_t delay_us );
 
 bool SYSTICK_TimerPeriodHasExpired(void);
+void SYSTICK_TimerCallbackSet ( SYSTICK_CALLBACK callback, uintptr_t context );
+uint32_t SYSTICK_GetTickCounter(void);
+void SYSTICK_StartTimeOut (SYSTICK_TIMEOUT* timeout, uint32_t delay_ms);
+void SYSTICK_ResetTimeOut (SYSTICK_TIMEOUT* timeout);
+bool SYSTICK_IsTimeoutReached (SYSTICK_TIMEOUT* timeout);
 #ifdef __cplusplus // Provide C++ Compatibility
  }
 #endif

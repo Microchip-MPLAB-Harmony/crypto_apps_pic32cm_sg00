@@ -23,11 +23,15 @@
 
 #include "app_config.h"
 
+#define SYSTICK_MAX   0xFFFFFF
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: File Scope or Global Data                                         */
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+MEASURE measure = {0};
 
 uint8_t cipher[32];
 
@@ -95,6 +99,95 @@ uint8_t AEAD_CCM_Tag[4] = {
 // Section: Interface Functions                                               */
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+/*******************************************************************************
+  Function:
+    void Measure_Callback(uintptr_t context)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void Measure_Callback(uintptr_t context)
+{
+    measure.rolloverCount++;
+}
+
+/*******************************************************************************
+  Function:
+    void InitMeasure (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void InitMeasure (void)
+{
+    // Use SYSTICK to implement measure obj 
+
+    measure.timerFreqHZ = (float) SYSTICK_FREQ;
+    measure.timerPeriodMS  = (float) SYSTICK_INTERRUPT_PERIOD_IN_US/1000;
+
+    SYSTICK_TimerCallbackSet(Measure_Callback, 0);
+    SYSTICK_TimerStart();
+}
+
+/*******************************************************************************
+  Function:
+    void StartMeasurement (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void StartMeasurement (void)
+{
+    measure.rolloverCount = 0;
+    measure.startTick = SYSTICK_TimerCounterGet();
+}
+
+/*******************************************************************************
+  Function:
+    void EndMeasurement (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+void EndMeasurement (void)
+{
+    measure.endTick = SYSTICK_TimerCounterGet();
+}
+
+/*******************************************************************************
+  Function:
+    float CalculateElapsedTimeMS (void)
+
+  Remarks:
+    See prototype in app_config.h.
+ */
+
+float CalculateElapsedTimeMS (void)
+{
+    uint32_t tickDifference;
+
+    if (measure.startTick >= measure.endTick)
+    {
+        // Normal case: startTick is later, and endTick is closer to zero
+        tickDifference = measure.startTick - measure.endTick;
+    }
+    else
+    {
+        // Handle wraparound: startTick was taken after a rollover
+        tickDifference = (SYSTICK_MAX - measure.endTick) + measure.startTick + 1;
+    }
+
+    // Calculate elapsed time in milliseconds
+    float timeFromTicks = (float)((tickDifference)/(measure.timerFreqHZ/1000));
+    float timeFromRollovers = measure.rolloverCount * measure.timerPeriodMS;
+
+    return timeFromRollovers + timeFromTicks;
+}
 
 /*******************************************************************************
   Function:

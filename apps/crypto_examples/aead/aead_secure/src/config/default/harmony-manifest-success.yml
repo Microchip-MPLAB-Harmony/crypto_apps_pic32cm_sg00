@@ -4,7 +4,7 @@
 
 
 project: aead_secure
-creation_date: 2024-11-06T12:21:20.162-07:00[America/Phoenix]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2024-11-07T10:51:22.956-07:00[America/Phoenix]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mcc_mode: IDE            # [IDE|Standalone|Headless]
 mcc_version: v5.5.1
@@ -15,7 +15,6 @@ compiler: XC32 4.45
 
 modules:
     - {name: "csp", version: "Branch_v3.20.0-E1"}
-    - {name: "core", version: "Branch_v3.14.0-E1"}
     - {name: "CMSIS_5", version: "5.8.0"}
     - {name: "crypto_v4", version: "MH3-105104-fix-wolfcrypt-rng-memory-leak"}
     - {name: "wolfssl", version: "v5.7.0-stable"}
