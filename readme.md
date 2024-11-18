@@ -11,7 +11,7 @@ MPLAB® Harmony 3 is an extension of the MPLAB® ecosystem for creating embedded
 - [Microchip MPLAB® Harmony](https://www.microchip.com/mplab/mplab-harmony)
 - [Microchip MPLAB® Harmony Pages](https://microchip-mplab-harmony.github.io/)
 
-This repository contains the MPLAB® Harmony 3 crypto_apps_pic32cx_mtg example demos using crypto_v4.
+This repository contains the MPLAB® Harmony 3 crypto_apps_pic32cm_sg00 example demos using crypto_v4.
 Release notes and more information can be found in the link below.
 
 - [MPLAB® Harmony 3 crypto_apps_pic32cm_sg00 example documentation](https://onlinedocs.microchip.com/oxy/GUID-09251AF5-BCD7-427A-ACCD-98C7C2FE3879-en-US-2/index.html)
