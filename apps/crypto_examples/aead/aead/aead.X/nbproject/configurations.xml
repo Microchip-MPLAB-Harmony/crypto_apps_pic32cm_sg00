@@ -9,11 +9,6 @@
           <logicalFolder name="bsp" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/default/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="osal" displayName="osal" projectFiles="true">
-            <itemPath>../src/config/default/osal/osal_definitions.h</itemPath>
-            <itemPath>../src/config/default/osal/osal_impl_basic.h</itemPath>
-            <itemPath>../src/config/default/osal/osal.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="peripheral" displayName="peripheral" projectFiles="true">
             <logicalFolder name="nvic" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/default/peripheral/nvic/plib_nvic.h</itemPath>
@@ -22,31 +17,11 @@
               <itemPath>../src/config/default/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="system" displayName="system" projectFiles="true">
-            <logicalFolder name="debug" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/default/system/debug/sys_debug.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="int" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/sys_int_mapping.h</itemPath>
-              <itemPath>../src/config/default/system/int/sys_int.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="time" displayName="time" projectFiles="true">
-              <itemPath>../src/config/default/system/time/src/sys_time_local.h</itemPath>
-              <itemPath>../src/config/default/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/default/system/time/sys_time_definitions.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/default/system/system.h</itemPath>
-            <itemPath>../src/config/default/system/system_common.h</itemPath>
-            <itemPath>../src/config/default/system/system_module.h</itemPath>
-          </logicalFolder>
           <itemPath>../src/config/default/definitions.h</itemPath>
           <itemPath>../src/config/default/interrupts.h</itemPath>
           <itemPath>../src/config/default/device.h</itemPath>
-          <itemPath>../src/config/default/configuration.h</itemPath>
           <itemPath>../src/config/default/device_cache.h</itemPath>
-          <itemPath>../src/config/default/user.h</itemPath>
           <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/default/sys_tasks.h</itemPath>
           <itemPath>../src/config/default/device_vectors.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -173,7 +148,6 @@
       <logicalFolder name="trustZone" displayName="trustZone" projectFiles="true">
         <itemPath>../src/trustZone/nonsecure_entry.h</itemPath>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -209,17 +183,8 @@
           <logicalFolder name="stdio" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="system" displayName="system" projectFiles="true">
-            <logicalFolder name="int" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/src/sys_int.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="time" displayName="time" projectFiles="true">
-              <itemPath>../src/config/default/system/time/src/sys_time.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
           <itemPath>../src/config/default/interrupts.c</itemPath>
           <itemPath>../src/config/default/exceptions.c</itemPath>
-          <itemPath>../src/config/default/tasks.c</itemPath>
           <itemPath>../src/config/default/libc_syscalls.c</itemPath>
           <itemPath>../src/config/default/startup_xc32.c</itemPath>
           <itemPath>../src/config/default/initialization.c</itemPath>
@@ -227,7 +192,6 @@
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/config/default/pin_configurations.csv</itemPath>
-      <itemPath>../src/app.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
