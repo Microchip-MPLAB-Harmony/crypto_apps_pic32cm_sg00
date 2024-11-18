@@ -1,5 +1,5 @@
 #!groovy
 
-@Library('jenkins-shared-library') _
+@Library('jenkins-shared-library@ivan_test') _
 
 jslRunH3AppRepoBuildTask(timeout:60)
