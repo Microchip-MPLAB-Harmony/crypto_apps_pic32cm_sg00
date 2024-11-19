@@ -41,7 +41,7 @@ typedef void (*funcptr_void) (void) __attribute__((cmse_nonsecure_call));
 int main ( void )
 {
     uint32_t msp_ns = *((uint32_t *)(TZ_START_NS));
-    volatile funcptr_void NonSecure_ResetHandler;
+    // volatile funcptr_void NonSecure_ResetHandler;
 
     /* Initialize all modules */
     SYS_Initialize ( NULL );
@@ -52,10 +52,10 @@ int main ( void )
         __TZ_set_MSP_NS(msp_ns);
 
         /* Get non-secure reset handler */
-        NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));
+        // NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));
 
         /* Start non-secure state software application */
-        NonSecure_ResetHandler();
+        // NonSecure_ResetHandler();
     }
 
     while ( true )
