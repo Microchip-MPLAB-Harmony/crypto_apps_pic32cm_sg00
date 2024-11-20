@@ -1,4 +1,4 @@
-﻿![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
+![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # MPLAB® Harmony 3 crypto_apps_pic32cm_sg00
@@ -16,6 +16,6 @@ Release notes and more information can be found in the link below.
 
 - [MPLAB® Harmony 3 crypto_apps_pic32cm_sg00 example documentation](https://onlinedocs.microchip.com/oxy/GUID-09251AF5-BCD7-427A-ACCD-98C7C2FE3879-en-US-2/index.html)
 
-- [MPLAB® Harmony 3 crypto_apps_pic32cz_ca91 documentation download](https://onlinedocs.microchip.com/download/GUID-2E6A8A8A-6666-41A1-80EB-161DC44F21DA?type=webhelp)
+- [MPLAB® Harmony 3 crypto_apps_pic32cm_sg00 documentation download](https://onlinedocs.microchip.com/download/GUID-2E6A8A8A-6666-41A1-80EB-161DC44F21DA?type=webhelp)
 
 

@@ -3,7 +3,7 @@
 
 # Microchip MPLAB® Harmony 3 Crypto v4 Release Notes
 
-##  MPLAB® Harmony 3 Crypto v4 Library Application Examples for PIC32CM SG Family v1.0
+##  MPLAB® Harmony 3 Crypto v4 Library Application Examples for PIC32CM SG00 Family v1.0
 
 ###  Development Kit and Demo Application Support
 Following table provides number of crypto library examples available for different development kits.
@@ -11,7 +11,7 @@ Following table provides number of crypto library examples available for differe
 
 |Development Kits|MPLAB X Applications|
 |----|----|
-|[PIC32CM SG  Curiosity Ultra Development Board](https://www.microchip.com/en-us/development-tool/EV16W43A)|6|
+|[PIC32CM SG00  Curiosity Ultra Development Board](https://www.microchip.com/en-us/development-tool/EV16W43A)|6|
 
 
 ### Initial release supported application demos
