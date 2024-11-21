@@ -221,12 +221,12 @@
         <archiverTool>
         </archiverTool>
         <loading>
-          <makeArtifact PL="..\..\dsa_secure\dsa_secure.X"
+          <makeArtifact PL="../../dsa_secure/dsa_secure.X"
                         CT="1"
                         CN="default"
                         AC="true"
                         BL="true"
-                        WD="..\..\dsa_secure\dsa_secure.X"
+                        WD="../../dsa_secure/dsa_secure.X"
                         BC="${MAKE}  -f Makefile CONF=default"
                         DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                         CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
