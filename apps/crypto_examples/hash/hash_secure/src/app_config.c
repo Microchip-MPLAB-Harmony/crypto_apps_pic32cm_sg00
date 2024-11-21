@@ -11,7 +11,7 @@
     This file contains the data for hash algorithms for the demo app.
 
   Description:
-    This file contains source code for the pic32cxmtg cryptov4 demo application.
+    This file contains source code for the cryptov4 demo application.
  *******************************************************************************/
 
 /* ************************************************************************** */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Package name="crypto_apps_pic32cx_mtg">
+<Package name="crypto_apps_pic32cm_sg00">
     <Dependencies>
-        <Dependency name="bsp" version="v3.18.0">
+        <Dependency name="bsp" version="v3.20.1">
         <Dependency name="csp" version="v3.18.3">
         <Dependency name="wolfssl" version="5.7.0">
         <Dependency name="core" version="v3.13.1">

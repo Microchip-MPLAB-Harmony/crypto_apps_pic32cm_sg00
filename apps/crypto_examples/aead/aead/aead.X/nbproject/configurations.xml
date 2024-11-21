@@ -221,12 +221,12 @@
         <archiverTool>
         </archiverTool>
         <loading>
-          <makeArtifact PL="..\..\aead_secure\aead_secure.X"
+          <makeArtifact PL="../../aead_secure/aead_secure.X"
                         CT="1"
                         CN="default"
                         AC="true"
                         BL="true"
-                        WD="..\..\aead_secure\aead_secure.X"
+                        WD="../../aead_secure/aead_secure.X"
                         BC="${MAKE}  -f Makefile CONF=default"
                         DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                         CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
