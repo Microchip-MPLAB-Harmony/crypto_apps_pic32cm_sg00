@@ -3,6 +3,6 @@
 
 # KAS
 
-- [KAS](https://onlinedocs.microchip.com/oxy/GUID-2ADE9B73-7B6A-46A8-A925-447C8FB45715-en-US-2/index.html)
+- [KAS](https://onlinedocs.microchip.com/oxy/GUID-2E6A8A8A-6666-41A1-80EB-161DC44F21DA-en-US-1/GUID-34FEB41A-64AF-41F7-B66E-3DE9BBBBE312.html)
 
 

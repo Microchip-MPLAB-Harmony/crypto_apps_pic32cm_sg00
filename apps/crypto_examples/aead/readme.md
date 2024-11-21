@@ -3,6 +3,6 @@
 
 # AEAD
 
-- [AEAD](https://onlinedocs.microchip.com/oxy/GUID-34FEB41A-64AF-41F7-B66E-3DE9BBBBE312-en-US-2/index.html)
+- [AEAD](https://onlinedocs.microchip.com/oxy/GUID-2E6A8A8A-6666-41A1-80EB-161DC44F21DA-en-US-1/GUID-5CC5AF0E-11D6-40F7-9DC3-B4B4F06E2EBC.html)
 
 
