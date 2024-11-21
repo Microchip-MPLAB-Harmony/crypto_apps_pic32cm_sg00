@@ -8,7 +8,7 @@
             <make-project-type>0</make-project-type>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects>
-                <make-dep-project>..\..\symmetric_secure\symmetric_secure.X</make-dep-project>
+                <make-dep-project>../../symmetric_secure/symmetric_secure.X</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>../../symmetric_secure/src</sourceRootElem>

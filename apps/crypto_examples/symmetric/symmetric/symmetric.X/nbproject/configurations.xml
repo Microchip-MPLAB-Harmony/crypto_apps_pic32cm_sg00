@@ -224,12 +224,12 @@
         <archiverTool>
         </archiverTool>
         <loading>
-          <makeArtifact PL="..\..\symmetric_secure\symmetric_secure.X"
+          <makeArtifact PL="../../symmetric_secure/symmetric_secure.X"
                         CT="1"
                         CN="default"
                         AC="true"
                         BL="true"
-                        WD="..\..\symmetric_secure\symmetric_secure.X"
+                        WD="../../symmetric_secure/symmetric_secure.X"
                         BC="${MAKE}  -f Makefile CONF=default"
                         DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
                         CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
