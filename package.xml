@@ -2,7 +2,7 @@
 <Package name="crypto_apps_pic32cm_sg00">
     <Dependencies>
         <Dependency name="bsp" version="v3.20.1">
-        <Dependency name="csp" version="v3.18.3">
+        <Dependency name="csp" version="v3.20.0">
         <Dependency name="wolfssl" version="5.7.0">
         <Dependency name="core" version="v3.13.1">
         <Dependency name="crypto_v4" version="v4.0.0-E3">
